@@ -149,52 +149,119 @@
   "args": [
    4,
    2,
-   23
+   230,
+   10,
+   1
   ],
-  "out": "4 days at 2 hot meals a day is 8 boils; the canister holds 23 - fuel to spare honestly."
+  "out": "4 days at 2 hot meals a day needs 8 boils; the canister panel holds 23 boils - a margin of 15 boils on the labeled norms."
  },
  {
   "fn": "tripTruth",
   "args": [
    1,
    2,
-   23
+   230,
+   10,
+   1
   ],
-  "out": "1 day at 2 hot meals a day is 2 boils; the canister holds 23 - fuel to spare honestly."
+  "out": "1 day at 2 hot meals a day needs 2 boils; the canister panel holds 23 boils - a margin of 21 boils on the labeled norms."
  },
  {
   "fn": "tripTruth",
   "args": [
    7,
    3,
-   23
+   230,
+   10,
+   1
   ],
-  "out": "7 days at 3 hot meals a day is 21 boils; the canister holds 23 - a tight fit honestly."
+  "out": "7 days at 3 hot meals a day needs 21 boils; the canister panel holds 23 boils - a margin of 2 boils on the labeled norms."
  },
  {
   "fn": "tripTruth",
   "args": [
    10,
    3,
-   23
+   230,
+   10,
+   1
   ],
-  "out": "10 days at 3 hot meals a day is 30 boils; the canister holds 23 - pack a second canister."
+  "out": "10 days at 3 hot meals a day needs 30 boils; the canister panel holds 23 boils - a deficit of 7 boils on the labeled norms."
  },
  {
   "fn": "tripTruth",
   "args": [
-   2,
-   1,
-   4
+   20,
+   3,
+   230,
+   10,
+   1
   ],
-  "out": "2 days at 1 hot meal a day is 2 boils; the canister holds 4 - fuel to spare honestly."
+  "out": "20 days at 3 hot meals a day needs 60 boils; the canister panel holds 23 boils - a deficit of 37 boils on the labeled norms."
+ },
+ {
+  "fn": "tripTruth",
+  "args": [
+   4,
+   2,
+   230,
+   10,
+   5
+  ],
+  "out": "4 days at 2 hot meals a day needs 8 boils; the canister panel holds 4 boils - a deficit of 4 boils on the labeled norms."
+ },
+ {
+  "fn": "tripTruth",
+  "args": [
+   4,
+   2,
+   80,
+   10,
+   1
+  ],
+  "out": "4 days at 2 hot meals a day needs 8 boils; the canister panel holds 8 boils - no margin at all on the labeled norms."
+ },
+ {
+  "fn": "tripTruth",
+  "args": [
+   4,
+   2,
+   5,
+   10,
+   1
+  ],
+  "out": "4 days at 2 hot meals a day needs 8 boils; the canister panel holds 0 boils - a deficit of 8 boils on the labeled norms."
+ },
+ {
+  "fn": "tripTruth",
+  "args": [
+   9,
+   1,
+   100,
+   10,
+   1
+  ],
+  "out": "9 days at 1 hot meal a day needs 9 boils; the canister panel holds 10 boils - a margin of 1 boil on the labeled norms."
+ },
+ {
+  "fn": "tripTruth",
+  "args": [
+   1,
+   1,
+   15,
+   10,
+   1
+  ],
+  "out": "1 day at 1 hot meal a day needs 1 boil; the canister panel holds 1 boil - no margin at all on the labeled norms."
  },
  {
   "fn": "tripTruth",
   "args": [
    0,
    2,
-   23
+   230,
+   10,
+   1
   ],
   "err": "the days must be above zero"
  },
@@ -203,7 +270,9 @@
   "args": [
    4,
    0,
-   23
+   230,
+   10,
+   1
   ],
   "err": "the meals must be above zero"
  },
@@ -212,8 +281,32 @@
   "args": [
    4,
    2,
+   0,
+   10,
+   1
+  ],
+  "err": "the canister size must be above zero"
+ },
+ {
+  "fn": "tripTruth",
+  "args": [
+   4,
+   2,
+   230,
+   0,
+   1
+  ],
+  "err": "the burn norm must be above zero"
+ },
+ {
+  "fn": "tripTruth",
+  "args": [
+   4,
+   2,
+   230,
+   10,
    0
   ],
-  "err": "the canister boils must be above zero"
+  "err": "the liters must be above zero"
  }
 ]
