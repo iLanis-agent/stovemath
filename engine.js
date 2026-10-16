@@ -41,16 +41,21 @@ function canisterTruth(grams, burn, liters) {
   return `A ${grams}-gram canister at the ${burn}-gram-per-liter burn norm and ${liters}-liter boils is ${boils} ${plural(boils, "boil", "boils")} - ${verdict}.`;
 }
 
-function tripTruth(days, meals, boils) {
+function tripTruth(days, meals, grams, burn, liters) {
   if (!(days > 0)) throw new Error("the days must be above zero");
   if (!(meals > 0)) throw new Error("the meals must be above zero");
-  if (!(boils > 0)) throw new Error("the canister boils must be above zero");
+  if (!(grams > 0)) throw new Error("the canister size must be above zero");
+  if (!(burn > 0)) throw new Error("the burn norm must be above zero");
+  if (!(liters > 0)) throw new Error("the liters must be above zero");
   const needed = days * meals;
-  let verdict;
-  if (needed * 2 <= boils) verdict = "fuel to spare honestly";
-  else if (needed <= boils) verdict = "a tight fit honestly";
-  else verdict = "pack a second canister";
-  return `${days} ${plural(days, "day", "days")} at ${meals} hot ${plural(meals, "meal", "meals")} a day is ${needed} ${plural(needed, "boil", "boils")}; the canister holds ${boils} - ${verdict}.`;
+  const perBoil = burn * liters;
+  const boils = Math.floor(grams / perBoil);
+  const diff = boils - needed;
+  let tail;
+  if (diff > 0) tail = `a margin of ${diff} ${plural(diff, "boil", "boils")} on the labeled norms`;
+  else if (diff === 0) tail = "no margin at all on the labeled norms";
+  else tail = `a deficit of ${-diff} ${plural(-diff, "boil", "boils")} on the labeled norms`;
+  return `${days} ${plural(days, "day", "days")} at ${meals} hot ${plural(meals, "meal", "meals")} a day needs ${needed} ${plural(needed, "boil", "boils")}; the canister panel holds ${boils} ${plural(boils, "boil", "boils")} - ${tail}.`;
 }
 
 if (typeof module !== "undefined") {
