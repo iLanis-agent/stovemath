@@ -9,7 +9,7 @@ Three panels of hypothetical arithmetic on labeled norms:
 
 - **The boil truth** - liters times claimed minutes per liter: the honest wait.
 - **The canister truth** - fuel grams vs. the burn norm: the honest boil count.
-- **The trip truth** - hot meals over the trip vs. the boils you carry: spare, tight, or pack a second.
+- **The trip truth** - hot meals over the trip vs. the boils the canister panel holds: the margin or the deficit, on the labeled norms.
 
 ## The boundary
 
