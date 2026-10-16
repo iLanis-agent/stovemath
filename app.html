@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stove Math</title>
+<style>
+  :root { --accent: #7a3a2e; --warn: #a83232; }
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 32px 16px 64px; background: #faf7f5; color: #2b2523;
+         font-family: Georgia, 'Times New Roman', serif; }
+  main { max-width: 680px; margin: 0 auto; }
+  h1 { color: var(--accent); font-size: 2.2rem; margin: 0 0 4px; }
+  .tag { font-style: italic; color: var(--accent); margin: 0 0 28px; }
+  .boundary { border-left: 4px solid var(--warn); background: #fdf1f1; padding: 16px 20px;
+              border-radius: 8px; margin: 0 0 28px; }
+  .boundary h2 { color: var(--warn); font-size: 1.1rem; margin: 0 0 8px; }
+  .boundary p { margin: 0; line-height: 1.5; }
+  .card { background: #fff; border: 1px solid #e4dcd8; border-left: 4px solid var(--accent);
+          border-radius: 8px; padding: 20px 24px; margin: 0 0 24px; }
+  .card h2 { margin: 0 0 14px; font-size: 1.25rem; }
+  label { display: block; font-size: 0.95rem; margin: 10px 0 4px; }
+  input { width: 100%; max-width: 220px; padding: 8px 10px; font-size: 1rem;
+          border: 1px solid #cfc2bc; border-radius: 6px; background: #f4f0ed; }
+  .out { margin-top: 16px; font-size: 1.05rem; font-weight: bold; color: var(--accent);
+         line-height: 1.5; }
+  .out.err { color: var(--warn); }
+  footer { margin-top: 32px; font-size: 0.85rem; color: #8a7f7a; line-height: 1.5; }
+  a { color: var(--accent); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Stove Math</h1>
+  <p class="tag">Boil truth, canister truth and trip truth - labeled norms, honest arithmetic.</p>
+
+  <div class="boundary">
+    <h2>The boundary</h2>
+    <p>Stove Math keeps boil-time, fuel and meal arithmetic only. Every burn figure is a labeled
+    norm, not a promise - wind, altitude, cold and pot lid change real burns. Follow the stove's
+    manual, never use it in a tent, and pack fuel for the weather you might get.</p>
+  </div>
+
+  <div class="card">
+    <h2>The boil truth</h2>
+    <label for="b-liters">Water in the pot (liters)</label>
+    <input id="b-liters" type="number" step="any" value="2">
+    <label for="b-claim">Claimed minutes per liter</label>
+    <input id="b-claim" type="number" step="any" value="3.5">
+    <p class="out" id="b-out"></p>
+  </div>
+
+  <div class="card">
+    <h2>The canister truth</h2>
+    <label for="c-grams">Canister fuel (grams)</label>
+    <input id="c-grams" type="number" step="any" value="230">
+    <label for="c-burn">Burn norm (grams per liter boiled)</label>
+    <input id="c-burn" type="number" step="any" value="10">
+    <label for="c-liters">Your usual boil (liters)</label>
+    <input id="c-liters" type="number" step="any" value="1">
+    <p class="out" id="c-out"></p>
+  </div>
+
+  <div class="card">
+    <h2>The trip truth</h2>
+    <label for="t-days">Trip length (days)</label>
+    <input id="t-days" type="number" step="any" value="4">
+    <label for="t-meals">Hot meals a day</label>
+    <input id="t-meals" type="number" step="any" value="2">
+    <label for="t-boils">Boils your canister holds (from above)</label>
+    <input id="t-boils" type="number" step="any" value="23">
+    <p class="out" id="t-out"></p>
+  </div>
+
+  <footer>
+    Every figure here is hypothetical arithmetic on labeled norms, not a statement about any real
+    stove or canister. <a href="index.html">About Stove Math</a>
+  </footer>
+</main>
+<script src="engine.js"></script>
+<script>
+function num(id) { return parseFloat(document.getElementById(id).value); }
+function render(id, fn) {
+  const el = document.getElementById(id);
+  try {
+    el.textContent = fn();
+    el.classList.remove("err");
+  } catch (e) {
+    el.textContent = e.message;
+    el.classList.add("err");
+  }
+}
+function update() {
+  render("b-out", () => boilTruth(num("b-liters"), num("b-claim")));
+  render("c-out", () => canisterTruth(num("c-grams"), num("c-burn"), num("c-liters")));
+  render("t-out", () => tripTruth(num("t-days"), num("t-meals"), num("t-boils")));
+}
+document.querySelectorAll("input").forEach(i => i.addEventListener("input", update));
+update();
+</script>
+</body>
+</html>
