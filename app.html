@@ -67,8 +67,8 @@
     <input id="t-days" type="number" step="any" value="4">
     <label for="t-meals">Hot meals a day</label>
     <input id="t-meals" type="number" step="any" value="2">
-    <label for="t-boils">Boils your canister holds (from above)</label>
-    <input id="t-boils" type="number" step="any" value="23">
+    <p><em>Capacity comes from the canister panel above - change the fuel, burn norm or boil
+    volume there and this panel keeps up.</em></p>
     <p class="out" id="t-out"></p>
   </div>
 
@@ -93,7 +93,7 @@ function render(id, fn) {
 function update() {
   render("b-out", () => boilTruth(num("b-liters"), num("b-claim")));
   render("c-out", () => canisterTruth(num("c-grams"), num("c-burn"), num("c-liters")));
-  render("t-out", () => tripTruth(num("t-days"), num("t-meals"), num("t-boils")));
+  render("t-out", () => tripTruth(num("t-days"), num("t-meals"), num("c-grams"), num("c-burn"), num("c-liters")));
 }
 document.querySelectorAll("input").forEach(i => i.addEventListener("input", update));
 update();
