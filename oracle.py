@@ -44,21 +44,28 @@ def canister_truth(grams, burn, liters):
         verdict = "a whole season honestly"
     return f"A {grams}-gram canister at the {burn}-gram-per-liter burn norm and {liters}-liter boils is {boils} {plural(boils, 'boil', 'boils')} - {verdict}."
 
-def trip_truth(days, meals, boils):
+def trip_truth(days, meals, grams, burn, liters):
     if not (days > 0):
         raise ValueError("the days must be above zero")
     if not (meals > 0):
         raise ValueError("the meals must be above zero")
-    if not (boils > 0):
-        raise ValueError("the canister boils must be above zero")
+    if not (grams > 0):
+        raise ValueError("the canister size must be above zero")
+    if not (burn > 0):
+        raise ValueError("the burn norm must be above zero")
+    if not (liters > 0):
+        raise ValueError("the liters must be above zero")
     needed = days * meals
-    if needed * 2 <= boils:
-        verdict = "fuel to spare honestly"
-    elif needed <= boils:
-        verdict = "a tight fit honestly"
+    per_boil = burn * liters
+    boils = math.floor(grams / per_boil)
+    diff = boils - needed
+    if diff > 0:
+        tail = f"a margin of {diff} {plural(diff, 'boil', 'boils')} on the labeled norms"
+    elif diff == 0:
+        tail = "no margin at all on the labeled norms"
     else:
-        verdict = "pack a second canister"
-    return f"{days} {plural(days, 'day', 'days')} at {meals} hot {plural(meals, 'meal', 'meals')} a day is {needed} {plural(needed, 'boil', 'boils')}; the canister holds {boils} - {verdict}."
+        tail = f"a deficit of {-diff} {plural(-diff, 'boil', 'boils')} on the labeled norms"
+    return f"{days} {plural(days, 'day', 'days')} at {meals} hot {plural(meals, 'meal', 'meals')} a day needs {needed} {plural(needed, 'boil', 'boils')}; the canister panel holds {boils} {plural(boils, 'boil', 'boils')} - {tail}."
 
 FNS = {"boilTruth": boil_truth, "canisterTruth": canister_truth, "tripTruth": trip_truth}
 
@@ -80,14 +87,21 @@ cases = [
  {"fn":"canisterTruth","args":[0,10,1]},
  {"fn":"canisterTruth","args":[230,0,1]},
  {"fn":"canisterTruth","args":[230,10,0]},
- {"fn":"tripTruth","args":[4,2,23]},
- {"fn":"tripTruth","args":[1,2,23]},
- {"fn":"tripTruth","args":[7,3,23]},
- {"fn":"tripTruth","args":[10,3,23]},
- {"fn":"tripTruth","args":[2,1,4]},
- {"fn":"tripTruth","args":[0,2,23]},
- {"fn":"tripTruth","args":[4,0,23]},
- {"fn":"tripTruth","args":[4,2,0]}
+ {"fn":"tripTruth","args":[4,2,230,10,1]},
+ {"fn":"tripTruth","args":[1,2,230,10,1]},
+ {"fn":"tripTruth","args":[7,3,230,10,1]},
+ {"fn":"tripTruth","args":[10,3,230,10,1]},
+ {"fn":"tripTruth","args":[20,3,230,10,1]},
+ {"fn":"tripTruth","args":[4,2,230,10,5]},
+ {"fn":"tripTruth","args":[4,2,80,10,1]},
+ {"fn":"tripTruth","args":[4,2,5,10,1]},
+ {"fn":"tripTruth","args":[9,1,100,10,1]},
+ {"fn":"tripTruth","args":[1,1,15,10,1]},
+ {"fn":"tripTruth","args":[0,2,230,10,1]},
+ {"fn":"tripTruth","args":[4,0,230,10,1]},
+ {"fn":"tripTruth","args":[4,2,0,10,1]},
+ {"fn":"tripTruth","args":[4,2,230,0,1]},
+ {"fn":"tripTruth","args":[4,2,230,10,0]}
 ]
 
 out = []
